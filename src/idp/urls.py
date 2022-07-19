@@ -17,9 +17,18 @@ from django.contrib import admin
 from django.urls import path, include
 from users.views import ApiEndpoint
 
+
+
+
+
+def callback_view(request):
+    print("callback_view", request.GET)
+
+
 urlpatterns = [
     path('admin/', admin.site.urls),
     path('oauth/', include('oauth2_provider.urls', namespace='oauth2_provider')),
     path('users/', include('users.urls')),
+    path('auth/', include('authentication.urls')),
     path('api/hello', ApiEndpoint.as_view()), 
 ]

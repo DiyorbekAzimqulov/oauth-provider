@@ -41,6 +41,7 @@ INSTALLED_APPS = [
     'oauth2_provider',
     # my apps
     'users',
+    'authentication'
 ]
 
 MIDDLEWARE = [
@@ -139,4 +140,12 @@ STATIC_URL = 'static/'
 
 DEFAULT_AUTO_FIELD = 'django.db.models.BigAutoField'
 AUTH_USER_MODEL = 'users.User'
-LOGIN_URL = '/admin/login/'
+
+KEYCLOAK_SERVER=os.environ.get("KEYCLOAK_SERVER")
+KEYCLOAK_CLIENT_ID=os.environ.get("KEYCLOAK_CLIENT_ID")
+KEYCLOAK_CLIENT_SECRET=os.environ.get("KEYCLOAK_CLIENT_SECRET")
+KEYCLOAK_REDIRECT_URI=os.environ.get("KEYCLOAK_REDIRECT_URI")
+KEYCLOAK_REALM=os.environ.get("KEYCLOAK_REALM")
+
+from authentication.utils import generate_keycloak_auth_url
+LOGIN_URL = generate_keycloak_auth_url()
